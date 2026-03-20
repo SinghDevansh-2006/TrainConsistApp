@@ -1,7 +1,7 @@
-package com.train.app;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +55,30 @@ public class TrainConsistApp {
         System.out.println("Duplicates are automatically ignored by HashSet.");
         System.out.println("All unique bogies are maintained.");
 
-        System.out.println("\nSystem ready for operations ...");
+        System.out.println("\n--- UC4: Maintain Ordered Bogie Consist ---");
+
+        LinkedList<String> orderedConsist = new LinkedList<>();
+
+        orderedConsist.add("Engine");
+        orderedConsist.add("Sleeper");
+        orderedConsist.add("AC");
+        orderedConsist.add("Cargo");
+        orderedConsist.add("Guard");
+
+        System.out.println("Initial Train Consist:");
+        System.out.println(orderedConsist);
+
+        orderedConsist.add(2, "Pantry Car");
+
+        System.out.println("\nAfter Inserting Pantry Car at position 2:");
+        System.out.println(orderedConsist);
+
+        orderedConsist.removeFirst();
+        orderedConsist.removeLast();
+
+        System.out.println("\nAfter Removing First and Last Bogie:");
+        System.out.println(orderedConsist);
+
+        System.out.println("\nUC4 ordered consist operations completed...");
     }
 }
