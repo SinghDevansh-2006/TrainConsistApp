@@ -1,7 +1,9 @@
 package com.train.app;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TrainConsistApp {
 
@@ -35,6 +37,23 @@ public class TrainConsistApp {
         System.out.println("Sleeper Present : " + exists);
 
         System.out.println("\nFinal Train Consist : " + trainConsist);
+
+        System.out.println("\n--- UC3: Unique Bogie ID Tracking ---");
+
+        Set<String> bogieIds = new HashSet<>();
+
+        bogieIds.add("BG101");
+        bogieIds.add("BG102");
+        bogieIds.add("BG103");
+        bogieIds.add("BG101");
+        bogieIds.add("BG102");
+
+        System.out.println("Bogie IDs After Insertion:");
+        System.out.println(bogieIds);
+
+        System.out.println("\nNote:");
+        System.out.println("Duplicates are automatically ignored by HashSet.");
+        System.out.println("All unique bogies are maintained.");
 
         System.out.println("\nSystem ready for operations ...");
     }
