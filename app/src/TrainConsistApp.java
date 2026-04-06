@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TrainConsistApp {
 
@@ -54,7 +55,6 @@ public class TrainConsistApp {
         System.out.println("\n--- UC3: Unique Bogie ID Tracking ---");
 
         Set<String> bogieIds = new HashSet<>();
-
         bogieIds.add("BG101");
         bogieIds.add("BG102");
         bogieIds.add("BG103");
@@ -64,13 +64,9 @@ public class TrainConsistApp {
         System.out.println("Bogie IDs After Insertion:");
         System.out.println(bogieIds);
 
-        System.out.println("\nNote:");
-        System.out.println("Duplicates are automatically ignored by HashSet.");
-
         System.out.println("\n--- UC4: Maintain Ordered Bogie Consist ---");
 
         LinkedList<String> orderedConsist = new LinkedList<>();
-
         orderedConsist.add("Engine");
         orderedConsist.add("Sleeper");
         orderedConsist.add("AC");
@@ -94,7 +90,6 @@ public class TrainConsistApp {
         System.out.println("\n--- UC5: Preserve Insertion Order of Bogies ---");
 
         LinkedHashSet<String> formation = new LinkedHashSet<>();
-
         formation.add("Engine");
         formation.add("Sleeper");
         formation.add("Cargo");
@@ -107,7 +102,6 @@ public class TrainConsistApp {
         System.out.println("\n--- UC6: Map Bogie to Capacity (HashMap) ---");
 
         Map<String, Integer> bogieCapacity = new HashMap<>();
-
         bogieCapacity.put("Sleeper", 72);
         bogieCapacity.put("AC Chair", 56);
         bogieCapacity.put("First Class", 24);
@@ -120,7 +114,6 @@ public class TrainConsistApp {
         System.out.println("\n--- UC7: Sort Bogies by Capacity (Comparator) ---");
 
         List<Bogie> bogies = new ArrayList<>();
-
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 24));
@@ -138,6 +131,22 @@ public class TrainConsistApp {
             System.out.println(b.name + " -> " + b.capacity);
         }
 
-        System.out.println("\nUC7 sorting completed ...");
+        System.out.println("\n--- UC8: Filter Passenger Bogies Using Streams ---");
+
+        System.out.println("All Bogies:");
+        for (Bogie b : bogies) {
+            System.out.println(b.name + " -> " + b.capacity);
+        }
+
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        for (Bogie b : filteredBogies) {
+            System.out.println(b.name + " -> " + b.capacity);
+        }
+
+        System.out.println("\nUC8 filtering completed...");
     }
 }
