@@ -24,6 +24,16 @@ public class TrainConsistApp {
         }
     }
 
+    static class GoodsBogie {
+        String type;
+        String cargo;
+
+        GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println("=================================");
@@ -40,22 +50,9 @@ public class TrainConsistApp {
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
 
-        System.out.println("\nAfter Adding Bogies:");
-        System.out.println("Train Consist : " + trainConsist);
-
         trainConsist.remove("AC Chair");
 
-        System.out.println("\nAfter Removing AC Chair:");
-        System.out.println("Train Consist : " + trainConsist);
-
-        boolean exists = trainConsist.contains("Sleeper");
-
-        System.out.println("\nChecking if Sleeper exists:");
-        System.out.println("Sleeper Present : " + exists);
-
         System.out.println("\nFinal Train Consist : " + trainConsist);
-
-        System.out.println("\n--- UC3: Unique Bogie ID Tracking ---");
 
         Set<String> bogieIds = new HashSet<>();
         bogieIds.add("BG101");
@@ -63,24 +60,15 @@ public class TrainConsistApp {
         bogieIds.add("BG103");
         bogieIds.add("BG101");
 
-        System.out.println(bogieIds);
-
-        System.out.println("\n--- UC4: Maintain Ordered Bogie Consist ---");
-
         LinkedList<String> orderedConsist = new LinkedList<>();
         orderedConsist.add("Engine");
         orderedConsist.add("Sleeper");
         orderedConsist.add("AC");
         orderedConsist.add("Cargo");
         orderedConsist.add("Guard");
-
         orderedConsist.add(2, "Pantry Car");
         orderedConsist.removeFirst();
         orderedConsist.removeLast();
-
-        System.out.println(orderedConsist);
-
-        System.out.println("\n--- UC5: Preserve Insertion Order ---");
 
         LinkedHashSet<String> formation = new LinkedHashSet<>();
         formation.add("Engine");
@@ -89,20 +77,10 @@ public class TrainConsistApp {
         formation.add("Guard");
         formation.add("Sleeper");
 
-        System.out.println(formation);
-
-        System.out.println("\n--- UC6: Map Bogie to Capacity ---");
-
         Map<String, Integer> bogieCapacity = new HashMap<>();
         bogieCapacity.put("Sleeper", 72);
         bogieCapacity.put("AC Chair", 56);
         bogieCapacity.put("First Class", 24);
-
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
-
-        System.out.println("\n--- UC7: Sort Bogies ---");
 
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
@@ -112,21 +90,9 @@ public class TrainConsistApp {
 
         bogies.sort(Comparator.comparingInt(b -> b.capacity));
 
-        for (Bogie b : bogies) {
-            System.out.println(b.name + " -> " + b.capacity);
-        }
-
-        System.out.println("\n--- UC8: Filter Bogies ---");
-
         List<Bogie> filtered = bogies.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
-
-        for (Bogie b : filtered) {
-            System.out.println(b.name + " -> " + b.capacity);
-        }
-
-        System.out.println("\n--- UC9: Group Bogies ---");
 
         List<Bogie> bogieList = new ArrayList<>();
         bogieList.add(new Bogie("Sleeper", 72));
@@ -134,23 +100,9 @@ public class TrainConsistApp {
         bogieList.add(new Bogie("First Class", 24));
         bogieList.add(new Bogie("Sleeper", 70));
 
-        Map<String, List<Bogie>> grouped =
-                bogieList.stream()
-                        .collect(Collectors.groupingBy(b -> b.name));
-
-        for (Map.Entry<String, List<Bogie>> entry : grouped.entrySet()) {
-            System.out.println(entry.getKey());
-        }
-
-        System.out.println("\n--- UC10: Total Capacity ---");
-
         int total = bogieList.stream()
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
-
-        System.out.println("Total Capacity: " + total);
-
-        System.out.println("\n--- UC11: Validate Train ID & Cargo Code ---");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -163,16 +115,40 @@ public class TrainConsistApp {
         Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
         Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
-        Matcher trainMatcher = trainPattern.matcher(trainId);
-        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+        boolean isTrainValid = trainPattern.matcher(trainId).matches();
+        boolean isCargoValid = cargoPattern.matcher(cargoCode).matches();
 
-        boolean isTrainValid = trainMatcher.matches();
-        boolean isCargoValid = cargoMatcher.matches();
-
-        System.out.println("\nValidation Results:");
+        System.out.println("\n--- UC11 Validation ---");
         System.out.println("Train ID Valid: " + isTrainValid);
         System.out.println("Cargo Code Valid: " + isCargoValid);
 
-        System.out.println("\nUC11 validation completed ...");
+        System.out.println("\n--- UC12: Safety Compliance Check ---");
+
+        List<GoodsBogie> goodsBogies = new ArrayList<>();
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsBogies.add(new GoodsBogie("Open", "Coal"));
+        goodsBogies.add(new GoodsBogie("Box", "Grain"));
+        goodsBogies.add(new GoodsBogie("Cylindrical", "Coal"));
+
+        System.out.println("Goods Bogies in Train:");
+        for (GoodsBogie g : goodsBogies) {
+            System.out.println(g.type + " -> " + g.cargo);
+        }
+
+        boolean isSafe = goodsBogies.stream()
+                .allMatch(g ->
+                        !g.type.equalsIgnoreCase("Cylindrical")
+                                || g.cargo.equalsIgnoreCase("Petroleum")
+                );
+
+        System.out.println("\nSafety Compliance Status: " + isSafe);
+
+        if (isSafe) {
+            System.out.println("Train formation is SAFE.");
+        } else {
+            System.out.println("Train formation is NOT SAFE.");
+        }
+
+        System.out.println("\nUC12 safety validation completed ...");
     }
 }
