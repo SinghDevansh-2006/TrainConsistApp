@@ -151,16 +151,9 @@ public class TrainConsistApp {
         bogieList.add(new Bogie("Sleeper", 70));
         bogieList.add(new Bogie("AC Chair", 60));
 
-        System.out.println("All Bogies:");
-        for (Bogie b : bogieList) {
-            System.out.println(b.name + " -> " + b.capacity);
-        }
-
         Map<String, List<Bogie>> groupedBogies =
                 bogieList.stream()
                         .collect(Collectors.groupingBy(b -> b.name));
-
-        System.out.println("\nGrouped Bogies:");
 
         for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
             System.out.println("\nBogie Type: " + entry.getKey());
@@ -169,6 +162,25 @@ public class TrainConsistApp {
             }
         }
 
-        System.out.println("\nUC9 grouping completed ...");
+        System.out.println("\n--- UC10: Count Total Seats in Train ---");
+
+        List<Bogie> capacityList = new ArrayList<>();
+        capacityList.add(new Bogie("Sleeper", 72));
+        capacityList.add(new Bogie("AC Chair", 56));
+        capacityList.add(new Bogie("First Class", 24));
+        capacityList.add(new Bogie("Sleeper", 70));
+
+        System.out.println("Bogies in Train:");
+        for (Bogie b : capacityList) {
+            System.out.println(b.name + " -> " + b.capacity);
+        }
+
+        int totalCapacity = capacityList.stream()
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
+
+        System.out.println("\nTotal Seating Capacity of Train: " + totalCapacity);
+
+        System.out.println("\nUC10 aggregation completed ...");
     }
 }
