@@ -1,13 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.regex.Pattern;
 
@@ -151,5 +142,25 @@ public class TrainConsistApp {
         System.out.println("Stream Execution Time (ns): " + streamTime);
 
         System.out.println("\nUC13 performance benchmarking completed ...");
+        // ================= UC17 =================
+        System.out.println("\n=======================================");
+        System.out.println("UC17 - Sort Bogie Names Using Arrays.sort()");
+        System.out.println("=======================================\n");
+
+// Create array of bogie names
+        String[] bogieNames = {"Sleeper", "AC Chair", "First Class", "General", "Luxury"};
+
+// Display original names
+        System.out.println("Original Bogie Names:");
+        System.out.println(Arrays.toString(bogieNames));
+
+// ---- SORT USING ARRAYS.SORT ----
+        Arrays.sort(bogieNames);
+
+// Display sorted names
+        System.out.println("\nSorted Bogie Names (Alphabetical):");
+        System.out.println(Arrays.toString(bogieNames));
+
+        System.out.println("\nUC17 sorting completed ...");
     }
 }
