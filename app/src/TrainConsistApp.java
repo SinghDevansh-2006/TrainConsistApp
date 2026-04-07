@@ -151,5 +151,40 @@ public class TrainConsistApp {
         System.out.println("Stream Execution Time (ns): " + streamTime);
 
         System.out.println("\nUC13 performance benchmarking completed ...");
-    }
-}
+
+
+                System.out.println("===============================================");
+                System.out.println(" UC20 - Exception Handling During Search ");
+                System.out.println("===============================================\n");
+
+                // Create bogie array (EMPTY scenario)
+                String[] bogieId = {};
+
+                // Search key
+                String searchId = "BG101";
+
+                // ---- FAIL-FAST VALIDATION ----
+                if (bogieId.length == 0) {
+                    throw new IllegalStateException("No bogies available in train. Cannot perform search.");
+                }
+
+                // ---- SEARCH LOGIC ----
+                boolean found = false;
+
+                for (String id : bogieIds) {
+                    if (id.equals(searchId)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                // Display result
+                if (found) {
+                    System.out.println("Bogie " + searchId + " found in train.");
+                } else {
+                    System.out.println("Bogie " + searchId + " NOT found.");
+                }
+
+                System.out.println("\nUC20 execution completed ...");
+            }
+        }
