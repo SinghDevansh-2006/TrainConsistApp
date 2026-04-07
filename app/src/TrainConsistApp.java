@@ -1,13 +1,4 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.regex.Pattern;
 
@@ -151,5 +142,53 @@ public class TrainConsistApp {
         System.out.println("Stream Execution Time (ns): " + streamTime);
 
         System.out.println("\nUC13 performance benchmarking completed ...");
+        // ================= UC19 =================
+        System.out.println("\n=======================================");
+        System.out.println("UC19 - Binary Search for Bogie ID");
+        System.out.println("=======================================\n");
+
+// Create array of bogie IDs (can be unsorted initially)
+        String[] bogieIdsBinary = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+
+// Ensure sorted (important precondition)
+        Arrays.sort(bogieIdsBinary);
+
+// Search key
+        String key = "BG309";
+
+// Display bogies
+        System.out.println("Sorted Bogie IDs:");
+        for (String id : bogieIdsBinary) {
+            System.out.println(id);
+        }
+
+// ---- BINARY SEARCH LOGIC ----
+        int low = 0;
+        int high = bogieIdsBinary.length - 1;
+        boolean foundBinary = false;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int comparison = key.compareTo(bogieIdsBinary[mid]);
+
+            if (comparison == 0) {
+                foundBinary = true;
+                break;
+            } else if (comparison > 0) {
+                low = mid + 1;     // search right
+            } else {
+                high = mid - 1;    // search left
+            }
+        }
+
+// Display result
+        if (foundBinary) {
+            System.out.println("\nBogie " + key + " found using Binary Search.");
+        } else {
+            System.out.println("\nBogie " + key + " NOT found using Binary Search.");
+        }
+
+        System.out.println("\nUC19 search completed ...");
     }
 }
